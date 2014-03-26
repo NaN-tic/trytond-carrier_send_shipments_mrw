@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!-- This file is part of the carrier_send_shipments_mrw module for Tryton.
+The COPYRIGHT file at the top level of this repository contains the full
+copyright notices and license terms. -->
+<data>
+    <xpath expr="/form/notebook/page[@id='api']" position="after">
+        <page string="MRW" id="mrw" states="{'invisible': Not(Equal(Eval('method'), 'mrw'))}">
+            <label name="mrw_franchise"/>
+            <field name="mrw_franchise"/>
+            <label name="mrw_subscriber"/>
+            <field name="mrw_subscriber"/>
+            <label name="mrw_department"/>
+            <field name="mrw_department"/>
+        </page>
+    </xpath>
+</data>
