@@ -2,6 +2,34 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
+msgctxt "field:carrier.api,mrw_department:"
+msgid "Department"
+msgstr "Departamento"
+
+msgctxt "field:carrier.api,mrw_franchise:"
+msgid "Franchise"
+msgstr "Franquicia"
+
+msgctxt "field:carrier.api,mrw_subscriber:"
+msgid "Subscriber"
+msgstr "Subscriptor"
+
+msgctxt "help:carrier.api,mrw_department:"
+msgid "MRW department"
+msgstr "Departamento MRW"
+
+msgctxt "help:carrier.api,mrw_franchise:"
+msgid "MRW franchise"
+msgstr "Franquicia MRW"
+
+msgctxt "help:carrier.api,mrw_subscriber:"
+msgid "MRW subscriber"
+msgstr "Subscriptor MRW"
+
+msgctxt "view:carrier.api:"
+msgid "MRW"
+msgstr "MRW"
+
 msgctxt "wizard_button:carrier.send.shipments,result,end:"
 msgid "Close"
 msgstr "Cerrar"
