@@ -74,6 +74,11 @@ class ShipmentOut:
                 data['bultos'] = packages
                 #~ data['peso'] = ''
                 if shipment.carrier_cashondelivery:
+                    if not price_ondelivery:
+                        message = 'Shipment %s not have price and send ' \
+                                'cashondelivery' % (shipment.code)
+                        errors.append(message)
+                        continue
                     data['reembolso'] = 'O'
                     data['importe_reembolso'] = str(price_ondelivery).replace(".", ",")
 
