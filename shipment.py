@@ -38,7 +38,7 @@ class ShipmentOut:
 
                 notes = ''
                 if shipment.carrier_notes:
-                    notes = CarrierApi.carrier_unaccent(shipment.carrier_notes)
+                    notes = shipment.carrier_notes
 
                 packages = shipment.number_packages
                 if packages == 0:
@@ -63,11 +63,11 @@ class ShipmentOut:
                 data['nif'] = shipment.customer.vat_number
                 data['nombre'] = unaccent(shipment.customer.name)
                 data['telefono'] = unspaces(shipment.delivery_address.phone or shipment.company.party.phone)
-                data['contacto'] = unaccent((shipment.delivery_address.name
-                        or shipment.customer.name))
+                data['contacto'] = unaccent(shipment.delivery_address.name
+                        or shipment.customer.name)
                 data['atencion_de'] = unaccent((shipment.delivery_address.name
                         or shipment.customer.name))
-                data['observaciones'] = notes
+                data['observaciones'] = unaccent(notes)
                 #~ data['fecha'] = ''
                 data['referencia'] = shipment.code
                 data['codigo_servicio'] = str(service.code)
