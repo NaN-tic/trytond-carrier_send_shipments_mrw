@@ -86,6 +86,8 @@ class ShipmentOut:
                         'carrier_tracking_ref': reference,
                         'carrier_service': service,
                         'carrier_delivery': True,
+                        'send_date': shipment.send_date,
+                        'send_employee': shipment.send_employee,
                         })
                     logging.getLogger('mrw').info(
                         'Send shipment %s' % (shipment.code))
