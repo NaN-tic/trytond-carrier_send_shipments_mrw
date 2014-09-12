@@ -67,7 +67,10 @@ class ShipmentOut:
                 data['codigo_servicio'] = str(service.code)
                 data['bultos'] = packages
                 if api.weight and hasattr(shipment, 'weight_func'):
-                    data['peso'] = str(shipment.weight_func)
+                    weight = str(int(round(shipment.weight_func)))
+                    if weight == '0':
+                        weight = '1'
+                    data['peso'] = weight
                 if shipment.carrier_cashondelivery:
                     price_ondelivery = ShipmentOut.get_price_ondelivery_shipment_out(shipment)
                     if not price_ondelivery:
