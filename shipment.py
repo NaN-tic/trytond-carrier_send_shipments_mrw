@@ -47,7 +47,7 @@ class ShipmentOut:
                     notes = shipment.carrier_notes
 
                 packages = shipment.number_packages
-                if packages == 0:
+                if not packages or packages == 0:
                     packages = 1
 
                 data = {}
