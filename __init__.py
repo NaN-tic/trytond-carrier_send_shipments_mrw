@@ -4,10 +4,13 @@
 from trytond.pool import Pool
 from .api import *
 from .shipment import *
-
+from .manifest import *
 
 def register():
     Pool.register(
         CarrierApi,
         ShipmentOut,
         module='carrier_send_shipments_mrw', type_='model')
+    Pool.register(
+        CarrierManifest,
+        module='carrier_send_shipments_mrw', type_='wizard')
