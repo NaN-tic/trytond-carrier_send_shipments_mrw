@@ -114,7 +114,7 @@ class ShipmentOut:
         return references, labels, errors
 
     @classmethod
-    def print_labels_mrw(cls, api, shipments):
+    def print_labels_mrw(self, api, shipments):
         '''
         Get labels from shipments out from MRW
         '''
@@ -148,6 +148,6 @@ class ShipmentOut:
                     'Generated tmp label %s' % (temp.name))
                 temp.close()
                 labels.append(temp.name)
-            cls.write(shipments, {'carrier_printed': True})
+            self.write(shipments, {'carrier_printed': True})
 
             return labels
