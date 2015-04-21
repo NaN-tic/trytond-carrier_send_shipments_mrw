@@ -15,7 +15,7 @@ class CarrierManifest:
     def __setup__(cls):
         super(CarrierManifest, cls).__setup__()
         cls._error_messages.update({
-                'not_mrw_manifest': 'Not available MRW manifest.',
+                'not_mrw_manifest': 'MRW Manifest service is not available.',
                 })
 
     def get_manifest_mrw(self, api, from_date, to_date):

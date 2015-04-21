@@ -2,6 +2,10 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
+msgctxt "error:carrier.manifest:"
+msgid "MRW Manifest service is not available."
+msgstr "No es troba disponible el servei manifest MRW."
+
 msgctxt "field:carrier.api,mrw_department:"
 msgid "Department"
 msgstr "Departament"
