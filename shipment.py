@@ -166,4 +166,4 @@ class ShipmentOut:
                 labels.append(temp.name)
             self.write(shipments, {'carrier_printed': True})
 
-            return labels
+        return labels
