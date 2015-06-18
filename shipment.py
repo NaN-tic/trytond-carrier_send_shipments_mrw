@@ -47,7 +47,7 @@ class ShipmentOut:
 
         with Picking(api.username, api.password, api.mrw_franchise, api.mrw_subscriber, api.mrw_department, api.debug) as picking_api:
             for shipment in shipments:
-                service = shipment.carrier_service or default_service
+                service = shipment.carrier_service or shipment.carrier.service or default_service
                 if not service:
                     message = self.raise_user_error('mrw_add_services', {},
                         raise_exception=False)
