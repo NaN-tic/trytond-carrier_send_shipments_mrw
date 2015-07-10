@@ -54,9 +54,17 @@ class ShipmentOut:
                     errors.append(message)
                     continue
 
-                notes = ''
+                if api.reference_origin and hasattr(shipment, 'origin'):
+                    code = shipment.origin and shipment.origin.rec_name or shipment.code
+                else:
+                    code = shipment.code
+
+                if code != shipment.code:
+                    notes = '%s - %s\n' % (code, shipment.code)
+                else:
+                    notes = '%s\n' % (shipment.code)
                 if shipment.carrier_notes:
-                    notes = shipment.carrier_notes
+                    notes += '%s\n' % shipment.carrier_notes
 
                 packages = shipment.number_packages
                 if not packages or packages == 0:
@@ -80,7 +88,7 @@ class ShipmentOut:
                         or shipment.customer.name))
                 data['observaciones'] = unaccent(notes)
                 #~ data['fecha'] = ''
-                data['referencia'] = shipment.code
+                data['referencia'] = code
                 data['codigo_servicio'] = str(service.code)
                 data['bultos'] = packages
                 if api.weight and hasattr(shipment, 'weight_func'):
