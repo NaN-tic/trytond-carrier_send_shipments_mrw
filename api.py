@@ -4,14 +4,14 @@
 from trytond.model import fields
 from trytond.pool import PoolMeta
 from trytond.pyson import Eval
-
 import logging
 
 try:
     from mrw.picking import API
 except ImportError:
+    logger = logging.getLogger(__name__)
     message = 'Install MRW from Pypi: pip install mrw'
-    logging.getLogger('mrw').error(message)
+    logger.error(message)
     raise Exception(message)
 
 __all__ = ['CarrierApi']

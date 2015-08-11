@@ -11,6 +11,8 @@ import tempfile
 __all__ = ['ShipmentOut']
 __metaclass__ = PoolMeta
 
+logger = logging.getLogger(__name__)
+
 
 class ShipmentOut:
     __name__ = 'stock.shipment.out'
@@ -115,19 +117,17 @@ class ShipmentOut:
                         'carrier_send_date': ShipmentOut.get_carrier_date(),
                         'carrier_send_employee': ShipmentOut.get_carrier_employee() or None,
                         })
-                    logging.getLogger('mrw').info(
-                        'Send shipment %s' % (shipment.code))
+                    logger.info('Send shipment %s' % (shipment.code))
                     references.append(shipment.code)
                 else:
-                    logging.getLogger('mrw').error(
-                        'Not send shipment %s.' % (shipment.code))
+                    logger.error('Not send shipment %s.' % (shipment.code))
 
                 if error:
                     message = self.raise_user_error('mrw_not_send_error', {
                             'name': shipment.rec_name,
                             'error': error,
                             }, raise_exception=False)
-                    logging.getLogger('mrw').error(message)
+                    logger.error(message)
                     errors.append(message)
 
                 labels += self.print_labels_mrw(api, shipments)
@@ -145,7 +145,7 @@ class ShipmentOut:
         with Picking(api.username, api.password, api.mrw_franchise, api.mrw_subscriber, api.mrw_department, api.debug) as picking_api:
             for shipment in shipments:
                 if not shipment.carrier_tracking_ref:
-                    logging.getLogger('mrw').error(
+                    logger.error(
                         'Shipment %s has not been sent by MRW.'
                         % (shipment.code))
                     continue
@@ -157,7 +157,7 @@ class ShipmentOut:
 
                 label = picking_api.label(data)
                 if not label:
-                    logging.getLogger('mrw').error(
+                    logger.error(
                         'Label for shipment %s is not available from MRW.'
                         % shipment.code)
                     continue
@@ -165,7 +165,7 @@ class ShipmentOut:
                         prefix='%s-mrw-%s-' % (dbname, reference),
                         suffix='.pdf', delete=False) as temp:
                     temp.write(label) # Envialia PDF file
-                logging.getLogger('mrw').info(
+                logger.info(
                     'Generated tmp label %s' % (temp.name))
                 temp.close()
                 labels.append(temp.name)
