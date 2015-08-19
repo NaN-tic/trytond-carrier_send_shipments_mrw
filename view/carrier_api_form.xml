@@ -4,7 +4,7 @@ The COPYRIGHT file at the top level of this repository contains the full
 copyright notices and license terms. -->
 <data>
     <xpath expr="/form/notebook/page[@id='api']" position="after">
-        <page string="MRW" id="mrw" states="{'invisible': Not(Equal(Eval('method'), 'mrw'))}">
+        <page string="MRW" id="mrw">
             <label name="mrw_franchise"/>
             <field name="mrw_franchise"/>
             <label name="mrw_subscriber"/>

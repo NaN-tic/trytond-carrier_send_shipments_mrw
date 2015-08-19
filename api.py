@@ -1,9 +1,9 @@
-# This file is part of the carrier_send_shipments module for Tryton.
+# This file is part of the carrier_send_shipments_mrw module for Tryton.
 # The COPYRIGHT file at the top level of this repository contains the full
 # copyright notices and license terms.
 from trytond.model import fields
 from trytond.pool import PoolMeta
-from trytond.pyson import Eval
+from trytond.pyson import Eval, Not, Equal
 import logging
 
 try:
@@ -38,6 +38,13 @@ class CarrierApi:
         res = super(CarrierApi, cls).get_carrier_app()
         res.append(('mrw', 'MRW'))
         return res
+
+    @classmethod
+    def view_attributes(cls):
+        return super(CarrierApi, cls).view_attributes() + [
+            ('//page[@id="mrw"]', 'state', {
+                    'invisible': Not(Equal(Eval('method'), 'mrw')),
+                    })]
 
     def test_mrw(self, api):
         '''
