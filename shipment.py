@@ -40,6 +40,7 @@ class ShipmentOut:
         pool = Pool()
         CarrierApi = pool.get('carrier.api')
         ShipmentOut = pool.get('stock.shipment.out')
+        Uom = pool.get('product.uom')
 
         references = []
         labels = []
@@ -90,11 +91,20 @@ class ShipmentOut:
                 data['referencia'] = code
                 data['codigo_servicio'] = str(service.code)
                 data['bultos'] = packages
+
                 if api.weight and hasattr(shipment, 'weight_func'):
-                    weight = str(int(round(shipment.weight_func)))
-                    if weight == '0':
-                        weight = '1'
-                    data['peso'] = weight
+                    weight = shipment.weight_func
+                    if weight == 0:
+                        weight = 1
+                    if api.weight_api_unit:
+                        if shipment.weight_uom:
+                            weight = Uom.compute_qty(
+                                shipment.weight_uom, weight, api.weight_api_unit)
+                        elif api.weight_unit:
+                            weight = Uom.compute_qty(
+                                api.weight_unit, weight, api.weight_api_unit)
+                    data['peso'] = str(weight)
+
                 if shipment.carrier_cashondelivery:
                     price_ondelivery = ShipmentOut.get_price_ondelivery_shipment_out(shipment)
                     if not price_ondelivery:
