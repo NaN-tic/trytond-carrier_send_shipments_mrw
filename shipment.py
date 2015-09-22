@@ -41,6 +41,7 @@ class ShipmentOut:
         CarrierApi = pool.get('carrier.api')
         ShipmentOut = pool.get('stock.shipment.out')
         Uom = pool.get('product.uom')
+        Date = pool.get('ir.date')
 
         references = []
         labels = []
@@ -87,7 +88,7 @@ class ShipmentOut:
                 data['atencion_de'] = unaccent((shipment.delivery_address.name
                         or shipment.customer.name))
                 data['observaciones'] = unaccent(notes)
-                #~ data['fecha'] = ''
+                data['fecha'] = Date.today().strftime("%d/%m/%Y")
                 data['referencia'] = code
                 data['codigo_servicio'] = str(service.code)
                 data['bultos'] = packages
