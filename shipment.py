@@ -151,7 +151,7 @@ class ShipmentOut:
         Get labels from shipments out from MRW
         '''
         labels = []
-        dbname = Transaction().cursor.dbname
+        dbname = Transaction().database.name
 
         with Picking(api.username, api.password, api.mrw_franchise, api.mrw_subscriber, api.mrw_department, api.debug) as picking_api:
             for shipment in shipments:
