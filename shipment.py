@@ -95,8 +95,8 @@ class ShipmentOut:
 
                 if api.weight and hasattr(shipment, 'weight_func'):
                     weight = shipment.weight_func
-                    if weight == 0:
-                        weight = 1
+                    weight = 1 if weight == 0.0 else weight
+
                     if api.weight_api_unit:
                         if shipment.weight_uom:
                             weight = Uom.compute_qty(
@@ -104,6 +104,10 @@ class ShipmentOut:
                         elif api.weight_unit:
                             weight = Uom.compute_qty(
                                 api.weight_unit, weight, api.weight_api_unit)
+
+                    # weight is integer value, not float
+                    weight = int(round(weight))
+                    weight = 1 if weight == 0 else weight
                     data['peso'] = str(weight)
 
                 if shipment.carrier_cashondelivery:
