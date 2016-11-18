@@ -49,7 +49,8 @@ class ShipmentOut:
 
         default_service = CarrierApi.get_default_carrier_service(api)
 
-        with Picking(api.username, api.password, api.mrw_franchise, api.mrw_subscriber, api.mrw_department, api.debug) as picking_api:
+        with Picking(api.username, api.password, api.mrw_franchise, api.mrw_subscriber,
+                api.mrw_department, timeout=api.timeout, debug=api.debug) as picking_api:
             for shipment in shipments:
                 service = shipment.carrier_service or shipment.carrier.service or default_service
                 if not service:
@@ -157,7 +158,8 @@ class ShipmentOut:
         labels = []
         dbname = Transaction().cursor.dbname
 
-        with Picking(api.username, api.password, api.mrw_franchise, api.mrw_subscriber, api.mrw_department, api.debug) as picking_api:
+        with Picking(api.username, api.password, api.mrw_franchise, api.mrw_subscriber,
+                api.mrw_department, timeout=api.timeout, debug=api.debug) as picking_api:
             for shipment in shipments:
                 if not shipment.carrier_tracking_ref:
                     logger.error(
