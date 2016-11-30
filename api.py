@@ -10,7 +10,7 @@ try:
     from mrw.picking import API
 except ImportError:
     logger = logging.getLogger(__name__)
-    message = 'Install MRW from Pypi: pip install mrw'
+    message = 'Install MRW: pip install mrw'
     logger.error(message)
     raise Exception(message)
 
@@ -22,19 +22,17 @@ class CarrierApi:
     __name__ = 'carrier.api'
     mrw_franchise = fields.Char('Franchise', states={
             'required': Eval('method') == 'mrw',
-            }, help='MRW franchise')
+        }, help='MRW franchise')
     mrw_subscriber = fields.Char('Subscriber', states={
             'required': Eval('method') == 'mrw',
-            }, help='MRW subscriber')
+        }, help='MRW subscriber')
     mrw_department = fields.Char('Department', states={
             'required': Eval('method') == 'mrw',
-            }, help='MRW department')
+        }, help='MRW department')
 
     @classmethod
     def get_carrier_app(cls):
-        '''
-        Add Carrier MRW APP
-        '''
+        'Add Carrier MRW APP'
         res = super(CarrierApi, cls).get_carrier_app()
         res.append(('mrw', 'MRW'))
         return res
@@ -46,14 +44,12 @@ class CarrierApi:
                     'invisible': Not(Equal(Eval('method'), 'mrw')),
                     })]
 
-    def test_mrw(self, api):
-        '''
-        Test MRW connection
-        :param api: obj
-        '''
+    @classmethod
+    def test_mrw(cls, api):
+        'Test MRW connection'
         message = 'Connection unknown result'
 
         with API(api.username, api.password, api.mrw_franchise, api.mrw_subscriber, api.mrw_department, api.debug) \
                 as mrw_api:
             message = mrw_api.test_connection()
-        self.raise_user_error(message)
+        cls.raise_user_error(message)
