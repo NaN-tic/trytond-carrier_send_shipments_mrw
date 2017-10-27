@@ -22,8 +22,6 @@ class ShipmentOut:
         super(ShipmentOut, cls).__setup__()
         cls._error_messages.update({
             'mrw_add_services': 'Select a service or default service in MRW API',
-            'mrw_not_price': 'Shipment "%(name)s" not have price and send '
-                'cashondelivery',
             'mrw_not_send': 'Not send shipment %(name)s',
             'mrw_not_send_error': 'Not send shipment %(name)s. %(error)s',
             'mrw_not_label': 'Not available "%(name)s" label from MRW',
@@ -112,13 +110,7 @@ class ShipmentOut:
                     data['peso'] = str(weight)
 
                 if shipment.carrier_cashondelivery:
-                    price_ondelivery = ShipmentOut.get_price_ondelivery_shipment_out(shipment)
-                    if not price_ondelivery:
-                        message = self.raise_user_error('mrw_not_price', {
-                                'name': shipment.rec_name,
-                                }, raise_exception=False)
-                        errors.append(message)
-                        continue
+                    price_ondelivery = shipment.carrier_cashondelivery_price
                     data['reembolso'] = 'O'
                     data['importe_reembolso'] = str(price_ondelivery).replace(".", ",")
 
