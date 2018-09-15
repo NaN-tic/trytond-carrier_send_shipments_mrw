@@ -6,8 +6,7 @@ from trytond.pool import PoolMeta
 __all__ = ['CarrierManifest']
 
 
-class CarrierManifest:
-    __metaclass__ = PoolMeta
+class CarrierManifest(metaclass=PoolMeta):
     __name__ = 'carrier.manifest'
 
     @classmethod

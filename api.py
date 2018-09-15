@@ -1,24 +1,16 @@
 # This file is part of the carrier_send_shipments_mrw module for Tryton.
 # The COPYRIGHT file at the top level of this repository contains the full
 # copyright notices and license terms.
+import logging
 from trytond.model import fields
 from trytond.pool import PoolMeta
 from trytond.pyson import Eval, Not, Equal
-import logging
-
-try:
-    from mrw.picking import API
-except ImportError:
-    logger = logging.getLogger(__name__)
-    message = 'Install MRW: pip install mrw'
-    logger.error(message)
-    raise Exception(message)
+from mrw.picking import API
 
 __all__ = ['CarrierApi']
 
 
-class CarrierApi:
-    __metaclass__ = PoolMeta
+class CarrierApi(metaclass=PoolMeta):
     __name__ = 'carrier.api'
     mrw_franchise = fields.Char('Franchise', states={
             'required': Eval('method') == 'mrw',
