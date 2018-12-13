@@ -81,7 +81,7 @@ class ShipmentOut:
                 #~ data['provincia'] = ''
                 data['nif'] = shipment.customer.vat_code or shipment.customer.identifier_code
                 data['nombre'] = unaccent(shipment.customer.name)
-                data['telefono'] = unspaces(ShipmentOut.get_phone_shipment_out(shipment))
+                data['telefono'] = unspaces(shipment.mobile or shipment.phone)
                 data['contacto'] = unaccent(shipment.delivery_address.name
                         or shipment.customer.name)
                 data['atencion_de'] = unaccent((shipment.delivery_address.name
