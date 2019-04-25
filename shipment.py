@@ -138,7 +138,7 @@ class ShipmentOut:
                     logger.error(message)
                     errors.append(message)
 
-                labels += self.print_labels_mrw(api, shipments)
+                labels += self.print_labels_mrw(api, [shipment])
 
         return references, labels, errors
 
