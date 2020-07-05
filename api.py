@@ -5,6 +5,8 @@ import logging
 from trytond.model import fields
 from trytond.pool import PoolMeta
 from trytond.pyson import Eval, Not, Equal
+from trytond.i18n import gettext
+from trytond.exceptions import UserError
 from mrw.picking import API
 
 __all__ = ['CarrierApi']
@@ -41,7 +43,9 @@ class CarrierApi(metaclass=PoolMeta):
         'Test MRW connection'
         message = 'Connection unknown result'
 
-        with API(api.username, api.password, api.mrw_franchise, api.mrw_subscriber, api.mrw_department, api.debug) \
-                as mrw_api:
+        with API(api.username, api.password, api.mrw_franchise,
+                api.mrw_subscriber, api.mrw_department, api.debug) as mrw_api:
             message = mrw_api.test_connection()
-        cls.raise_user_error(message)
+            raise UserError(gettext(
+                    'carrier_send_shipments_mrw.msg_mrw_test_connection',
+                    message=message))

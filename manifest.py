@@ -2,6 +2,8 @@
 # The COPYRIGHT file at the top level of this repository contains
 # the full copyright notices and license terms.
 from trytond.pool import PoolMeta
+from trytond.i18n import gettext
+from trytond.exceptions import UserError
 
 __all__ = ['CarrierManifest']
 
@@ -9,12 +11,6 @@ __all__ = ['CarrierManifest']
 class CarrierManifest(metaclass=PoolMeta):
     __name__ = 'carrier.manifest'
 
-    @classmethod
-    def __setup__(cls):
-        super(CarrierManifest, cls).__setup__()
-        cls._error_messages.update({
-                'not_mrw_manifest': 'MRW Manifest service is not available.',
-                })
-
     def get_manifest_mrw(self, api, from_date, to_date):
-        self.raise_user_error('not_mrw_manifest')
+        raise UserError(
+            gettext('carrier_send_shipments_mrw.msg_mrw_not_manifest'))

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!-- This file is part of Tryton.  The COPYRIGHT file at the top level of
+this repository contains the full copyright notices and license terms. -->
+<tryton>
+    <data grouped="1">
+        <record model="ir.message" id="msg_mrw_add_services">
+            <field name="text">Select a service or default service in MRW API</field>
+        </record>
+        <record model="ir.message" id="msg_mrw_not_send">
+            <field name="text">Not send shipment %(name)s</field>
+        </record>
+        <record model="ir.message" id="msg_mrw_not_send_error">
+            <field name="text">Not send shipment %(name)s. %(error)s</field>
+        </record>
+        <record model="ir.message" id="msg_mrw_not_label">
+            <field name="text">Not available "%(name)s" label from MRW</field>
+        </record>
+        <record model="ir.message" id="msg_mrw_test_connection">
+            <field name="text">%(message)s</field>
+        </record>
+        <record model="ir.message" id="msg_mrw_not_manifest">
+            <field name="text">Manifest not available</field>
+        </record>
+    </data>
+</tryton>

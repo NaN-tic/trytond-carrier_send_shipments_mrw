@@ -1,18 +1,6 @@
-# 
+#
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
-
-msgctxt "error:carrier.manifest:"
-msgid "MRW Manifest service is not available."
-msgstr "No està disponible el Manifest de MRW."
-
-msgctxt "error:stock.shipment.out:"
-msgid "Not available \"%(name)s\" label from MRW"
-msgstr "No es troba disponible la etiqueta \"%(name)s\"de MRW."
-
-msgctxt "error:stock.shipment.out:"
-msgid "Select a service or default service in MRW API"
-msgstr "Selecciona un servei o un servei per defecte a la API de MRW."
 
 msgctxt "field:carrier.api,mrw_department:"
 msgid "Department"

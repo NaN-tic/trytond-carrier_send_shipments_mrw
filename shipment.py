@@ -3,6 +3,8 @@
 # the full copyright notices and license terms.
 from trytond.pool import Pool, PoolMeta
 from trytond.transaction import Transaction
+from trytond.i18n import gettext
+from trytond.exceptions import UserError
 from mrw.picking import Picking
 from trytond.modules.carrier_send_shipments.tools import unaccent, unspaces
 import logging
@@ -15,16 +17,6 @@ logger = logging.getLogger(__name__)
 
 class ShipmentOut(metaclass=PoolMeta):
     __name__ = 'stock.shipment.out'
-
-    @classmethod
-    def __setup__(cls):
-        super(ShipmentOut, cls).__setup__()
-        cls._error_messages.update({
-            'mrw_add_services': 'Select a service or default service in MRW API',
-            'mrw_not_send': 'Not send shipment %(name)s',
-            'mrw_not_send_error': 'Not send shipment %(name)s. %(error)s',
-            'mrw_not_label': 'Not available "%(name)s" label from MRW',
-            })
 
     @classmethod
     def send_mrw(self, api, shipments):
@@ -51,8 +43,7 @@ class ShipmentOut(metaclass=PoolMeta):
             for shipment in shipments:
                 service = shipment.carrier_service or shipment.carrier.service or default_service
                 if not service:
-                    message = self.raise_user_error('mrw_add_services', {},
-                        raise_exception=False)
+                    message = gettext('carrier_send_shipments_mrw.msg_mrw_add_services')
                     errors.append(message)
                     continue
 
@@ -130,10 +121,9 @@ class ShipmentOut(metaclass=PoolMeta):
                     logger.error('Not send shipment %s.' % (shipment.code))
 
                 if error:
-                    message = self.raise_user_error('mrw_not_send_error', {
-                            'name': shipment.rec_name,
-                            'error': error,
-                            }, raise_exception=False)
+                    message = gettext('carrier_send_shipments_mrw.msg_mrw_not_send_error',
+                        name=shipment.rec_name,
+                        error=error)
                     logger.error(message)
                     errors.append(message)
 
