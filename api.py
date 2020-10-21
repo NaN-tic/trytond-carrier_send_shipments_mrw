@@ -20,9 +20,7 @@ class CarrierApi(metaclass=PoolMeta):
     mrw_subscriber = fields.Char('Subscriber', states={
             'required': Eval('method') == 'mrw',
         }, help='MRW subscriber')
-    mrw_department = fields.Char('Department', states={
-            'required': Eval('method') == 'mrw',
-        }, help='MRW department')
+    mrw_department = fields.Char('Department', help='MRW department')
 
     @classmethod
     def get_carrier_app(cls):
