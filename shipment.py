@@ -37,7 +37,11 @@ class ShipmentOut(metaclass=PoolMeta):
         errors = []
 
         default_service = CarrierApi.get_default_carrier_service(api)
-
+        for shipment in shipments:
+            if not shipment.customer_phone_numbers:
+                raise UserError(
+                    gettext('carrier_send_shipments_mrw.msg_no_customer_phone',
+                         name=shipment.number))
         with Picking(api.username, api.password, api.mrw_franchise, api.mrw_subscriber,
                 api.mrw_department, timeout=api.timeout, debug=api.debug) as picking_api:
             for shipment in shipments:
@@ -71,7 +75,7 @@ class ShipmentOut(metaclass=PoolMeta):
                 #~ data['provincia'] = ''
                 data['nif'] = shipment.customer.identifier_code
                 data['nombre'] = unaccent(shipment.customer.name)
-                data['telefono'] = unspaces(shipment.customer.mobile or shipment.customer.phone)
+                data['telefono'] = unspaces(shipment.customer_phone_numbers)
                 data['contacto'] = unaccent(shipment.delivery_address.name
                         or shipment.customer.name)
                 data['atencion_de'] = unaccent((shipment.delivery_address.name
@@ -169,3 +173,25 @@ class ShipmentOut(metaclass=PoolMeta):
             self.write(shipments, {'carrier_printed': True})
 
         return labels
+
+    @classmethod
+    def get_labels_mrw(self, api, shipments):
+        '''
+        Get labels from shipments out from MRW
+        '''
+        shipment, = shipments
+        if not shipment.carrier_tracking_ref:
+            raise UserError(
+                gettext('carrier_send_shipments_mrw.msg_no_carrier_ref'))
+        with Picking(api.username, api.password, api.mrw_franchise,
+                api.mrw_subscriber, api.mrw_department, timeout=api.timeout,
+                debug=api.debug) as picking_api:
+            reference = shipment.carrier_tracking_ref
+            data = {}
+            data['numero'] = reference
+            label = picking_api.label(data)
+            if not label:
+                logger.error(
+                    'Label for shipment %s is not available from MRW.'
+                    % shipment.number)
+            return label

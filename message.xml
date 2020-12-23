@@ -21,5 +21,11 @@ this repository contains the full copyright notices and license terms. -->
         <record model="ir.message" id="msg_mrw_not_manifest">
             <field name="text">Manifest not available</field>
         </record>
+        <record model="ir.message" id="msg_no_carrier_ref">
+            <field name="text">No carrier reference</field>
+        </record>
+        <record model="ir.message" id="msg_no_customer_phone">
+            <field name="text">Shipment "%(name)s" has no customer phone number</field>
+        </record>
     </data>
 </tryton>
