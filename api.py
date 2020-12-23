@@ -8,6 +8,7 @@ from trytond.pyson import Eval, Not, Equal
 from trytond.i18n import gettext
 from trytond.exceptions import UserError
 from mrw.picking import API
+from mrw.picking import Picking
 
 __all__ = ['CarrierApi']
 
