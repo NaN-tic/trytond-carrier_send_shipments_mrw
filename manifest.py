@@ -5,8 +5,6 @@ from trytond.pool import PoolMeta
 from trytond.i18n import gettext
 from trytond.exceptions import UserError
 
-__all__ = ['CarrierManifest']
-
 
 class CarrierManifest(metaclass=PoolMeta):
     __name__ = 'carrier.manifest'

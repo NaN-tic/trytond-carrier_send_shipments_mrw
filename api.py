@@ -1,16 +1,12 @@
 # This file is part of the carrier_send_shipments_mrw module for Tryton.
 # The COPYRIGHT file at the top level of this repository contains the full
 # copyright notices and license terms.
-import logging
 from trytond.model import fields
 from trytond.pool import PoolMeta
 from trytond.pyson import Eval, Not, Equal
 from trytond.i18n import gettext
 from trytond.exceptions import UserError
 from mrw.picking import API
-from mrw.picking import Picking
-
-__all__ = ['CarrierApi']
 
 
 class CarrierApi(metaclass=PoolMeta):

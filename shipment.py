@@ -10,8 +10,6 @@ from trytond.modules.carrier_send_shipments.tools import unaccent, unspaces
 import logging
 import tempfile
 
-__all__ = ['ShipmentOut']
-
 logger = logging.getLogger(__name__)
 
 
