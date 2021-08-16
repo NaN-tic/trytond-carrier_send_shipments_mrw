@@ -17,7 +17,7 @@ class ShipmentOut(metaclass=PoolMeta):
     __name__ = 'stock.shipment.out'
 
     @classmethod
-    def send_mrw(self, api, shipments):
+    def send_mrw(cls, api, shipments):
         '''
         Send shipments out to mrw
         :param api: obj
@@ -109,7 +109,7 @@ class ShipmentOut(metaclass=PoolMeta):
                 reference, error = picking_api.create(data)
 
                 if reference:
-                    self.write([shipment], {
+                    cls.write([shipment], {
                         'carrier_tracking_ref': reference,
                         'carrier_service': service,
                         'carrier_delivery': True,
@@ -128,12 +128,14 @@ class ShipmentOut(metaclass=PoolMeta):
                     logger.error(message)
                     errors.append(message)
 
-                labels += self.print_labels_mrw(api, [shipment])
+                labels += cls.print_labels_mrw(api, [shipment])
+                if labels:
+                    cls.write(shipments, {'carrier_printed': True})
 
         return references, labels, errors
 
     @classmethod
-    def print_labels_mrw(self, api, shipments):
+    def print_labels_mrw(cls, api, shipments):
         '''
         Get labels from shipments out from MRW
         '''
@@ -168,28 +170,10 @@ class ShipmentOut(metaclass=PoolMeta):
                     'Generated tmp label %s' % (temp.name))
                 temp.close()
                 labels.append(temp.name)
-            self.write(shipments, {'carrier_printed': True})
 
         return labels
 
     @classmethod
-    def get_labels_mrw(self, api, shipments):
-        '''
-        Get labels from shipments out from MRW
-        '''
-        shipment, = shipments
-        if not shipment.carrier_tracking_ref:
-            raise UserError(
-                gettext('carrier_send_shipments_mrw.msg_no_carrier_ref'))
-        with Picking(api.username, api.password, api.mrw_franchise,
-                api.mrw_subscriber, api.mrw_department, timeout=api.timeout,
-                debug=api.debug) as picking_api:
-            reference = shipment.carrier_tracking_ref
-            data = {}
-            data['numero'] = reference
-            label = picking_api.label(data)
-            if not label:
-                logger.error(
-                    'Label for shipment %s is not available from MRW.'
-                    % shipment.number)
-            return label
+    def get_labels_mrw(cls, api, shipments):
+        labels = cls.print_labels_mrw(api, shipments)
+        return labels
