@@ -39,7 +39,7 @@ class CarrierApi(metaclass=PoolMeta):
         message = 'Connection unknown result'
 
         with API(api.username, api.password, api.mrw_franchise,
-                api.mrw_subscriber, api.mrw_department, api.debug) as mrw_api:
+                api.mrw_subscriber, api.mrw_department, debug=api.debug) as mrw_api:
             message = mrw_api.test_connection()
         raise UserError(gettext(
                 'carrier_send_shipments_mrw.msg_mrw_test_connection',
